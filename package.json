@@ -8,8 +8,10 @@
         "start": "next start"
     },
     "dependencies": {
+        "@prisma/client": "^2.14.0",
         "axios": "^0.21.1",
         "next": "^10.0.0",
+        "next-auth": "^3.1.0",
         "react": "16.13.1",
         "react-dom": "16.13.1"
     },
@@ -18,5 +20,8 @@
         "tabWidth": 4,
         "semi": true,
         "singleQuote": true
+    },
+    "devDependencies": {
+        "@prisma/cli": "^2.14.0"
     }
 }
