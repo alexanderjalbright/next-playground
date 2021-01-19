@@ -1,9 +1,7 @@
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import Adapters from 'next-auth/adapters';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from '../../../lib/prisma';
 
 const options = {
     providers: [
@@ -12,6 +10,7 @@ const options = {
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
         }),
     ],
+    secret: process.env.NEXT_AUTH_SECRET,
     adapter: Adapters.Prisma.Adapter({ prisma }),
     // pages: {
     //     signIn: '/api/auth/signin', // Displays signin buttons
@@ -24,22 +23,32 @@ const options = {
     // // Callbacks are asynchronous functions you can use to control what happens
     // // when an action is performed.
     // // https://next-auth.js.org/configuration/callbacks
-    // callbacks: {
-    //     // signIn: async (user, account, profile) => { return Promise.resolve(true) },
-    //     // redirect: async (url, baseUrl) => {
-    //     //     return Promise.resolve('http://localhost:3000/auth/loggedin');
-    //     // },
-    //     // session: async (session, user) => { return Promise.resolve(session) },
-    //     // jwt: async (token, user, account, profile, isNewUser) => { return Promise.resolve(token) }
-    // },
+    callbacks: {
+        signIn: async (user, account, profile) => {
+            // console.log(user, account);
+            console.log('callbacks');
+            return Promise.resolve(true);
+        },
+        redirect: async (url, baseUrl) => {
+            console.log('redirect');
+            console.log(url, baseUrl);
+            return Promise.resolve(url);
+        },
+        session: async (session, user) => {
+            console.log('session');
+            return Promise.resolve(session);
+        },
+        // jwt: async (token, user, account, profile, isNewUser) => { return Promise.resolve(token) }
+    },
 
     // // Events are useful for logging
     // // https://next-auth.js.org/configuration/events
     // events: {},
 
     // // Enable debug messages in the console if you are having problems
-    // debug: true,
+    debug: true,
 };
-export default (req, res) => 
-{console.log(req, res, options)
-    NextAuth(req, res, options)};
+
+export default (req, res) => {
+    NextAuth(req, res, options);
+};

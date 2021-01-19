@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '../../lib/prisma';
 
 export default async function handler(req, res) {
     switch (req.method) {
@@ -19,8 +19,7 @@ const post = (req, res) => {
 };
 
 const get = async (req, res) => {
-    const prisma = new PrismaClient()
-    const tests = await prisma.test.findMany()
+    const tests = await prisma.test.findMany();
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({ name: tests }));
