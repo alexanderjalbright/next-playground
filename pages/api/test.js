@@ -12,14 +12,17 @@ export default async function handler(req, res) {
 }
 
 const post = (req, res) => {
-    console.log(req.body);
-    console.log('post');
+    // console.log(req.body);
+    // console.log('post');
     res.statusCode = 200;
     res.end('BITCH YOU POSTED');
 };
 
 const get = async (req, res) => {
     const tests = await prisma.test.findMany();
+
+    // const token = await jwt.getToken({ req, secret });
+    // console.log('JSON Web Token', token);
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify({ name: tests }));
