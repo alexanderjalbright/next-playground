@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 export default function App({ tests }) {
     return (
         <div>
+            <h1>Test</h1>
             <ul>
                 {tests.name.map((test) => (
                     <li key={test.id}>{test.stringField}</li>
